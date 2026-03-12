@@ -220,6 +220,14 @@
         </collision>
       </link>
 
+    <!-- TCP frame centered between the fingers near the grasp equilibrium point -->
+    <link name="${prefix}robotiq_arg2f_tcp"/>
+    <joint name="${prefix}robotiq_arg2f_tcp_joint" type="fixed">
+      <origin rpy="0 0 0" xyz="0 0 0.174"/>
+      <parent link="${prefix}robotiq_arg2f_base_link"/>
+      <child link="${prefix}robotiq_arg2f_tcp"/>
+    </joint>
+
     <!-- left finger -->
     <xacro:finger_links prefix="${prefix}" fingerprefix="left"/>
     <xacro:finger_joints prefix="${prefix}" fingerprefix="left" reflect="1.0"/>
