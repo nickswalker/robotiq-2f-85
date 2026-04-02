@@ -4,6 +4,8 @@ This is the latest version of the Robotiq 2F-85 (v4), which has been sold since 
 
 There are 4 hardware revisions of the Robotiq 2F-85. The 3 and 4 are easily confused, but have different dimensions and weights. Almost all online models are of the v3. You probably have a v4.
 
+The included coupling mesh is for the GRP-CPL-062, the latest as of 2026. Note that the [old AGC-CPL-062-002 is slightly thinner](https://blog.robotiq.com/knowledge/new-vs-old-gripper-coupling-5-1736280782857).
+
 ## Reference Images
 
 | Image | Version | Release Date |
