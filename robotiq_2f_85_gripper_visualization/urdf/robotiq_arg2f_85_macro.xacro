@@ -24,7 +24,7 @@
             <mesh filename="package://robotiq_2f_85_gripper_visualization/meshes/visual/outer_knuckle.stl" />
           </geometry>
           <material name="">
-            <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+            <color rgba="0.65 0.65 0.65 1" />
           </material>
         </visual>
         <collision>
@@ -49,7 +49,7 @@
             <mesh filename="package://robotiq_2f_85_gripper_visualization/meshes/visual/bar.stl" />
           </geometry>
           <material name="">
-            <color rgba="0.1 0.1 0.1 1" />
+            <color rgba="0.13 0.13 0.13 1" />
           </material>
         </visual>
         <collision>
@@ -74,7 +74,7 @@
             <mesh filename="package://robotiq_2f_85_gripper_visualization/meshes/visual/proximal_phalanx.stl" />
           </geometry>
           <material name="">
-            <color rgba="0.1 0.1 0.1 1" />
+            <color rgba="0.13 0.13 0.13 1" />
           </material>
         </visual>
         <collision>
@@ -89,57 +89,55 @@
     <xacro:macro name="distal_phalanx" params="prefix fingerprefix">
       <link name="${prefix}${fingerprefix}_distal_phalanx">
         <inertial>
-          <origin xyz="0.000299999999999317 0.0160078233491243 -0.0136945669206257" rpy="0 0 0" />
-          <mass value="0.04" />
-          <inertia ixx="2.71909453810972E-06" ixy="1.35402465472579E-21" ixz="-7.1817349065269E-22" iyy="7.69100314106116E-07" iyz="6.74715432769696E-07" izz="2.30315190420171E-06" />
+          <origin xyz="0 -0.009 0.005" rpy="0 0 0" />
+          <mass value="0.02" />
+          <inertia ixx="1.839e-6" ixy="2.943e-15" ixz="-8.887e-15" iyy="1.184e-6" iyz="4.328e-7" izz="1.820e-6" />
           </inertial>
         <visual>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
-            <mesh filename="package://robotiq_2f_85_gripper_visualization/meshes/visual/distal_phalanx.stl" />
+            <mesh filename="package://robotiq_2f_85_gripper_visualization/meshes/visual/driver.dae" />
           </geometry>
           <material name="">
-            <color rgba="0.1 0.1 0.1 1" />
+            <color rgba="0.13 0.13 0.13 1" />
           </material>
         </visual>
         <collision>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
-            <mesh filename="package://robotiq_2f_85_gripper_visualization/meshes/collision/distal_phalanx.stl" />
+            <mesh filename="package://robotiq_2f_85_gripper_visualization/meshes/collision/driver.stl" />
           </geometry>
         </collision>
       </link>
     </xacro:macro>
 
-    <!-- Finger pad link, the default are the "big pads" with rubber-->
-    <!-- <xacro:macro name="pad" params="prefix fingerprefix">
-      <link name="${prefix}${fingerprefix}_pad">
+    <xacro:macro name="finger_tip" params="prefix fingerprefix">
+      <link name="${prefix}${fingerprefix}_finger_tip">
+        <inertial>
+          <origin xyz="0 -0.008 0.016" rpy="0 0 0" />
+          <mass value="0.021" />
+          <inertia ixx="3.071e-6" ixy="-3.735e-13" ixz="-1.785e-13" iyy="3.467e-6" iyz="4.052e-7" izz="1.175e-6" />
+        </inertial>
         <visual>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
-            <box size="0.022 0.00635 0.0375"/>
+            <mesh filename="package://robotiq_2f_85_gripper_visualization/meshes/visual/agc-tip-mld-kit-85.dae" />
           </geometry>
-          <material name="">
-            <color rgba="0.9 0.9 0.9 1" />
-          </material>
         </visual>
         <collision>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
-            <box size="0.022 0.00635 0.0375"/>
+            <mesh filename="package://robotiq_2f_85_gripper_visualization/meshes/collision/agc-tip-mld-kit-85.stl" />
           </geometry>
-          <material name="">
-            <color rgba="0.9 0.0 0.0 1" />
-          </material>
         </collision>
       </link>
-    </xacro:macro> -->
+    </xacro:macro>
 
     <xacro:macro name="finger_links" params="prefix fingerprefix">
       <xacro:outer_knuckle prefix="${prefix}" fingerprefix="${fingerprefix}"/>
       <xacro:bar prefix="${prefix}" fingerprefix="${fingerprefix}"/>
       <xacro:distal_phalanx prefix="${prefix}" fingerprefix="${fingerprefix}"/>
-      <!-- <xacro:pad prefix="${prefix}" fingerprefix="${fingerprefix}"/> -->
+      <xacro:finger_tip prefix="${prefix}" fingerprefix="${fingerprefix}"/>
       <xacro:proximal_phalanx prefix="${prefix}" fingerprefix="${fingerprefix}"/>
     </xacro:macro>
 
@@ -175,19 +173,19 @@
       </joint>
     </xacro:macro>
 
-    <!-- <xacro:macro name="pad_joint" params="prefix fingerprefix">
-      <joint name="${prefix}${fingerprefix}_pad_joint" type="fixed">
-        <origin xyz="0 -0.0220203446692936 0.03242" rpy="0 0 0"/>
+    <xacro:macro name="finger_tip_joint" params="prefix fingerprefix">
+      <joint name="${prefix}${fingerprefix}_finger_tip_joint" type="fixed">
+        <origin xyz="0 -0.011402 0.01305" rpy="0 0 0"/>
         <parent link="${prefix}${fingerprefix}_distal_phalanx" />
-        <child link="${prefix}${fingerprefix}_pad" />
-        <axis xyz="0 0 1" />
+        <child link="${prefix}${fingerprefix}_finger_tip" />
       </joint>
-    </xacro:macro> -->
+    </xacro:macro>
 
     <xacro:macro name="finger_joints" params="prefix fingerprefix reflect">
       <xacro:bar_joint prefix="${prefix}" fingerprefix="${fingerprefix}"/>
       <xacro:proximal_phalanx_joint prefix="${prefix}" fingerprefix="${fingerprefix}" reflect="${reflect}"/>
       <xacro:distal_phalanx_joint prefix="${prefix}" fingerprefix="${fingerprefix}"/>
+      <xacro:finger_tip_joint prefix="${prefix}" fingerprefix="${fingerprefix}"/>
       <!-- <xacro:pad_joint prefix="${prefix}" fingerprefix="${fingerprefix}"/> -->
     </xacro:macro>
 
@@ -209,7 +207,7 @@
             <mesh filename="package://robotiq_2f_85_gripper_visualization/meshes/visual/base_link.dae" />
           </geometry>
           <material name="">
-            <color rgba="0.1 0.1 0.1 1" />
+            <color rgba="0.13 0.13 0.13 1" />
           </material>
         </visual>
         <collision>
